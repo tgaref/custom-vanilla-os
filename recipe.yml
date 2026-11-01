@@ -36,7 +36,7 @@ stages:
       - >-
         apt-get install -y --no-install-recommends
         fish wl-clipboard emacs-pgtk alacritty udiskie fuzzel
-        brightnessctl playerctl borgbackup2 libvterm0 libvterm-dev
+        brightnessctl playerctl libvterm0 libvterm-dev
         build-essential procps curl file git
         umbriel xdg-desktop-portal-umbriel
         libxcb-cursor0 libxcb-image0 libxcb-render-util0 libxcb-util1

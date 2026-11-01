@@ -11,4 +11,5 @@ Before=xdg-desktop-autostart.target
 [Service]
 Slice=session.slice
 Type=notify
+Environment="PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin"
 ExecStart=niri --session

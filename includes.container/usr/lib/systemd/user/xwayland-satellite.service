@@ -8,7 +8,8 @@ Requisite=graphical-session.target
 [Service]
 Type=notify
 NotifyAccess=all
-ExecStart=/usr/bin/xwayland-satellite
+Environment="PATH=%h/.local/bin:/usr/local/bin:/usr/bin:/bin"
+ExecStart=xwayland-satellite
 StandardOutput=journal
 
 [Install]

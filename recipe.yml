@@ -29,23 +29,57 @@ stages:
 
   # Put your custom actions below this comment
 
-  - name: example-packages # Sample module using the built-in Apt module to install packages
+  - name: add-niri-repo
+    type: shell
+    commands:
+      - curl -fsSL https://download.opensuse.org/repositories/home:/AvengeMedia:/danklinux/Debian_Testing/Release.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/home_AvengeMedia_danklinux.gpg
+      - echo 'deb http://download.opensuse.org/repositories/home:/AvengeMedia:/danklinux/Debian_Testing/ /' > /etc/apt/sources.list.d/home:AvengeMedia:danklinux.list
+      - apt-get update
+      - ldconfig
+
+  - name: custom-packages
     type: apt
     sources:
       - packages:
-        - vim
-
-  - name: example-commands # Sample module demonstrating the Shell module with custom commands
-    type: shell
-    commands:
-    - echo Example output
-
-  - name: example-modules # Sample module demonstrating importing local and remote modules
-    type: includes
-    includes:
-      - modules/50-install-debs.yml # Sample local module present in this repository
-      # - gh:vanilla-os/dev-image:main:modules/00-basics.yml # Sample GitHub remote module in the format: `gh:your-name/your-repo:branch:modules/file.yml`
-      # - https://raw.githubusercontent.com/Vanilla-OS/dev-image/main/modules/05-go.yml # Sample full URL remote module
+        # User CLI & Apps
+        - fish
+        - wl-clipboard
+        - emacs-pgtk
+        - alacritty
+        - udiskie
+        - fuzzel
+        - brightnessctl
+        - playerctl
+        - borgbackup
+        - libvterm0
+        - libvterm-dev
+        # Homebrew prerequisites
+        - build-essential
+        - procps
+        - curl
+        - file
+        - git
+        # Wayland Compositor & Xwayland
+        - niri
+        - xwayland-satellite
+        # Noctalia runtime libraries
+        - libsdbus-c++2
+        - libgles2
+        - libsecret-1-0
+        - libsodium26
+        - libpipewire-0.3-0t64
+        - libwireplumber-0.5-0
+        - libqalculate23
+        - libical3t64
+        - libtomlplusplus3t64
+        - libmd4c0
+        - libwebp7
+        - libwebpdemux2
+        - libsndfile1
+        - libjemalloc2
+        - libinput10
+        - libseat1
+        - libxml2-16
 
   # Put your custom actions above this comment
 

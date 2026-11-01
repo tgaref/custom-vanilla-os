@@ -1,0 +1,3121 @@
+# bash completion for noctalia; generated from the live CLI schema
+_noctalia_complete_words() {
+  local words="$1"
+  local IFS=$'\n'
+  COMPREPLY=( $(compgen -W "$words" -- "$cur") )
+}
+
+_noctalia_plugins_enabled() {
+  local words="$(noctalia msg plugins list 2>/dev/null | awk '$4 == "enabled" {print $1}')"
+  COMPREPLY=( $(compgen -W "$words" -- "$cur") )
+}
+
+_noctalia_plugins_disabled() {
+  local words="$(noctalia msg plugins list 2>/dev/null | awk '$4 == "disabled" {print $1}')"
+  COMPREPLY=( $(compgen -W "$words" -- "$cur") )
+}
+
+_noctalia_plugin_prefix() {
+  local words="$(noctalia msg plugins list 2>/dev/null | awk '$4 == "enabled" {print $1":"}')"
+  compopt -o nospace 2>/dev/null
+  COMPREPLY=( $(compgen -W "$words" -- "$cur") )
+}
+
+_noctalia_completions() {
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  local path=noctalia
+  local depth=1
+  local i token
+  for ((i=1; i<COMP_CWORD; ++i)); do
+    token="${COMP_WORDS[i]}"
+    case "$path:$token" in
+      noctalia:completions) path=noctalia_completions; depth=$((i + 1)) ;;
+      noctalia:config) path=noctalia_config; depth=$((i + 1)) ;;
+      noctalia:dmenu) path=noctalia_dmenu; depth=$((i + 1)) ;;
+      noctalia:firefox-theme) path=noctalia_firefox_theme; depth=$((i + 1)) ;;
+      noctalia:msg) path=noctalia_msg; depth=$((i + 1)) ;;
+      noctalia:plugins) path=noctalia_plugins; depth=$((i + 1)) ;;
+      noctalia:theme) path=noctalia_theme; depth=$((i + 1)) ;;
+      noctalia_config:export) path=noctalia_config_export; depth=$((i + 1)) ;;
+      noctalia_config:replay-report) path=noctalia_config_replay_report; depth=$((i + 1)) ;;
+      noctalia_config:settings-count) path=noctalia_config_settings_count; depth=$((i + 1)) ;;
+      noctalia_config:validate) path=noctalia_config_validate; depth=$((i + 1)) ;;
+      noctalia_msg:annotate) path=noctalia_msg_annotate; depth=$((i + 1)) ;;
+      noctalia_msg:bar-auto-hide-set) path=noctalia_msg_bar_auto_hide_set; depth=$((i + 1)) ;;
+      noctalia_msg:bar-hide) path=noctalia_msg_bar_hide; depth=$((i + 1)) ;;
+      noctalia_msg:bar-layer-set) path=noctalia_msg_bar_layer_set; depth=$((i + 1)) ;;
+      noctalia_msg:bar-reserve-toggle) path=noctalia_msg_bar_reserve_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:bar-show) path=noctalia_msg_bar_show; depth=$((i + 1)) ;;
+      noctalia_msg:bar-toggle) path=noctalia_msg_bar_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:bluetooth-disable) path=noctalia_msg_bluetooth_disable; depth=$((i + 1)) ;;
+      noctalia_msg:bluetooth-enable) path=noctalia_msg_bluetooth_enable; depth=$((i + 1)) ;;
+      noctalia_msg:bluetooth-status) path=noctalia_msg_bluetooth_status; depth=$((i + 1)) ;;
+      noctalia_msg:bluetooth-toggle) path=noctalia_msg_bluetooth_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:brightness-down) path=noctalia_msg_brightness_down; depth=$((i + 1)) ;;
+      noctalia_msg:brightness-list-backlight-devices) path=noctalia_msg_brightness_list_backlight_devices; depth=$((i + 1)) ;;
+      noctalia_msg:brightness-osd) path=noctalia_msg_brightness_osd; depth=$((i + 1)) ;;
+      noctalia_msg:brightness-set) path=noctalia_msg_brightness_set; depth=$((i + 1)) ;;
+      noctalia_msg:brightness-up) path=noctalia_msg_brightness_up; depth=$((i + 1)) ;;
+      noctalia_msg:caffeine-disable) path=noctalia_msg_caffeine_disable; depth=$((i + 1)) ;;
+      noctalia_msg:caffeine-enable) path=noctalia_msg_caffeine_enable; depth=$((i + 1)) ;;
+      noctalia_msg:caffeine-toggle) path=noctalia_msg_caffeine_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:clipboard-clear) path=noctalia_msg_clipboard_clear; depth=$((i + 1)) ;;
+      noctalia_msg:clipboard-copy) path=noctalia_msg_clipboard_copy; depth=$((i + 1)) ;;
+      noctalia_msg:clipboard-text) path=noctalia_msg_clipboard_text; depth=$((i + 1)) ;;
+      noctalia_msg:color-scheme-get) path=noctalia_msg_color_scheme_get; depth=$((i + 1)) ;;
+      noctalia_msg:color-scheme-set) path=noctalia_msg_color_scheme_set; depth=$((i + 1)) ;;
+      noctalia_msg:config-get) path=noctalia_msg_config_get; depth=$((i + 1)) ;;
+      noctalia_msg:config-set) path=noctalia_msg_config_set; depth=$((i + 1)) ;;
+      noctalia_msg:config-reload) path=noctalia_msg_config_reload; depth=$((i + 1)) ;;
+      noctalia_msg:desktop-widgets-edit) path=noctalia_msg_desktop_widgets_edit; depth=$((i + 1)) ;;
+      noctalia_msg:desktop-widgets-exit) path=noctalia_msg_desktop_widgets_exit; depth=$((i + 1)) ;;
+      noctalia_msg:desktop-widgets-hide) path=noctalia_msg_desktop_widgets_hide; depth=$((i + 1)) ;;
+      noctalia_msg:desktop-widgets-show) path=noctalia_msg_desktop_widgets_show; depth=$((i + 1)) ;;
+      noctalia_msg:desktop-widgets-toggle) path=noctalia_msg_desktop_widgets_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:desktop-widgets-toggle-edit) path=noctalia_msg_desktop_widgets_toggle_edit; depth=$((i + 1)) ;;
+      noctalia_msg:dock-hide) path=noctalia_msg_dock_hide; depth=$((i + 1)) ;;
+      noctalia_msg:dock-reload) path=noctalia_msg_dock_reload; depth=$((i + 1)) ;;
+      noctalia_msg:dock-show) path=noctalia_msg_dock_show; depth=$((i + 1)) ;;
+      noctalia_msg:dock-toggle) path=noctalia_msg_dock_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:dpms-off) path=noctalia_msg_dpms_off; depth=$((i + 1)) ;;
+      noctalia_msg:dpms-on) path=noctalia_msg_dpms_on; depth=$((i + 1)) ;;
+      noctalia_msg:effects-profile-set) path=noctalia_msg_effects_profile_set; depth=$((i + 1)) ;;
+      noctalia_msg:greeter-sync) path=noctalia_msg_greeter_sync; depth=$((i + 1)) ;;
+      noctalia_msg:keyboard-backlight-down) path=noctalia_msg_keyboard_backlight_down; depth=$((i + 1)) ;;
+      noctalia_msg:keyboard-backlight-osd) path=noctalia_msg_keyboard_backlight_osd; depth=$((i + 1)) ;;
+      noctalia_msg:keyboard-backlight-set) path=noctalia_msg_keyboard_backlight_set; depth=$((i + 1)) ;;
+      noctalia_msg:keyboard-backlight-toggle) path=noctalia_msg_keyboard_backlight_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:keyboard-backlight-up) path=noctalia_msg_keyboard_backlight_up; depth=$((i + 1)) ;;
+      noctalia_msg:keyboard-layout-cycle) path=noctalia_msg_keyboard_layout_cycle; depth=$((i + 1)) ;;
+      noctalia_msg:lockscreen-widgets-edit) path=noctalia_msg_lockscreen_widgets_edit; depth=$((i + 1)) ;;
+      noctalia_msg:lockscreen-widgets-exit) path=noctalia_msg_lockscreen_widgets_exit; depth=$((i + 1)) ;;
+      noctalia_msg:lockscreen-widgets-toggle-edit) path=noctalia_msg_lockscreen_widgets_toggle_edit; depth=$((i + 1)) ;;
+      noctalia_msg:log-level-set) path=noctalia_msg_log_level_set; depth=$((i + 1)) ;;
+      noctalia_msg:log-level-status) path=noctalia_msg_log_level_status; depth=$((i + 1)) ;;
+      noctalia_msg:media) path=noctalia_msg_media; depth=$((i + 1)) ;;
+      noctalia_msg:mic-mute) path=noctalia_msg_mic_mute; depth=$((i + 1)) ;;
+      noctalia_msg:mic-volume-down) path=noctalia_msg_mic_volume_down; depth=$((i + 1)) ;;
+      noctalia_msg:mic-volume-osd) path=noctalia_msg_mic_volume_osd; depth=$((i + 1)) ;;
+      noctalia_msg:mic-volume-set) path=noctalia_msg_mic_volume_set; depth=$((i + 1)) ;;
+      noctalia_msg:mic-volume-up) path=noctalia_msg_mic_volume_up; depth=$((i + 1)) ;;
+      noctalia_msg:network-toggle) path=noctalia_msg_network_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:nightlight-disable) path=noctalia_msg_nightlight_disable; depth=$((i + 1)) ;;
+      noctalia_msg:nightlight-enable) path=noctalia_msg_nightlight_enable; depth=$((i + 1)) ;;
+      noctalia_msg:nightlight-force-toggle) path=noctalia_msg_nightlight_force_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:nightlight-toggle) path=noctalia_msg_nightlight_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:notification-clear-active) path=noctalia_msg_notification_clear_active; depth=$((i + 1)) ;;
+      noctalia_msg:notification-clear-history) path=noctalia_msg_notification_clear_history; depth=$((i + 1)) ;;
+      noctalia_msg:notification-dnd-set) path=noctalia_msg_notification_dnd_set; depth=$((i + 1)) ;;
+      noctalia_msg:notification-dnd-status) path=noctalia_msg_notification_dnd_status; depth=$((i + 1)) ;;
+      noctalia_msg:notification-dnd-toggle) path=noctalia_msg_notification_dnd_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:notification-invoke-latest) path=noctalia_msg_notification_invoke_latest; depth=$((i + 1)) ;;
+      noctalia_msg:notification-show) path=noctalia_msg_notification_show; depth=$((i + 1)) ;;
+      noctalia_msg:osd-disable) path=noctalia_msg_osd_disable; depth=$((i + 1)) ;;
+      noctalia_msg:osd-enable) path=noctalia_msg_osd_enable; depth=$((i + 1)) ;;
+      noctalia_msg:osd-show) path=noctalia_msg_osd_show; depth=$((i + 1)) ;;
+      noctalia_msg:osd-toggle) path=noctalia_msg_osd_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:panel-close) path=noctalia_msg_panel_close; depth=$((i + 1)) ;;
+      noctalia_msg:panel-open) path=noctalia_msg_panel_open; depth=$((i + 1)) ;;
+      noctalia_msg:panel-toggle) path=noctalia_msg_panel_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:plugin) path=noctalia_msg_plugin; depth=$((i + 1)) ;;
+      noctalia_msg:plugins) path=noctalia_msg_plugins; depth=$((i + 1)) ;;
+      noctalia_msg:power-cycle) path=noctalia_msg_power_cycle; depth=$((i + 1)) ;;
+      noctalia_msg:power-set) path=noctalia_msg_power_set; depth=$((i + 1)) ;;
+      noctalia_msg:screenshot-annotate) path=noctalia_msg_screenshot_annotate; depth=$((i + 1)) ;;
+      noctalia_msg:screenshot-fullscreen) path=noctalia_msg_screenshot_fullscreen; depth=$((i + 1)) ;;
+      noctalia_msg:screenshot-region) path=noctalia_msg_screenshot_region; depth=$((i + 1)) ;;
+      noctalia_msg:screenshot-window) path=noctalia_msg_screenshot_window; depth=$((i + 1)) ;;
+      noctalia_msg:session) path=noctalia_msg_session; depth=$((i + 1)) ;;
+      noctalia_msg:settings-close) path=noctalia_msg_settings_close; depth=$((i + 1)) ;;
+      noctalia_msg:settings-open) path=noctalia_msg_settings_open; depth=$((i + 1)) ;;
+      noctalia_msg:settings-open-plugin) path=noctalia_msg_settings_open_plugin; depth=$((i + 1)) ;;
+      noctalia_msg:settings-open-widget) path=noctalia_msg_settings_open_widget; depth=$((i + 1)) ;;
+      noctalia_msg:settings-toggle) path=noctalia_msg_settings_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:status) path=noctalia_msg_status; depth=$((i + 1)) ;;
+      noctalia_msg:taskbar-cycle) path=noctalia_msg_taskbar_cycle; depth=$((i + 1)) ;;
+      noctalia_msg:templates-apply) path=noctalia_msg_templates_apply; depth=$((i + 1)) ;;
+      noctalia_msg:theme-mode-get) path=noctalia_msg_theme_mode_get; depth=$((i + 1)) ;;
+      noctalia_msg:theme-mode-set) path=noctalia_msg_theme_mode_set; depth=$((i + 1)) ;;
+      noctalia_msg:theme-mode-toggle) path=noctalia_msg_theme_mode_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:volume-down) path=noctalia_msg_volume_down; depth=$((i + 1)) ;;
+      noctalia_msg:volume-mute) path=noctalia_msg_volume_mute; depth=$((i + 1)) ;;
+      noctalia_msg:volume-osd) path=noctalia_msg_volume_osd; depth=$((i + 1)) ;;
+      noctalia_msg:volume-set) path=noctalia_msg_volume_set; depth=$((i + 1)) ;;
+      noctalia_msg:volume-up) path=noctalia_msg_volume_up; depth=$((i + 1)) ;;
+      noctalia_msg:wallpaper-get) path=noctalia_msg_wallpaper_get; depth=$((i + 1)) ;;
+      noctalia_msg:wallpaper-next) path=noctalia_msg_wallpaper_next; depth=$((i + 1)) ;;
+      noctalia_msg:wallpaper-previous) path=noctalia_msg_wallpaper_previous; depth=$((i + 1)) ;;
+      noctalia_msg:wallpaper-random) path=noctalia_msg_wallpaper_random; depth=$((i + 1)) ;;
+      noctalia_msg:wallpaper-set) path=noctalia_msg_wallpaper_set; depth=$((i + 1)) ;;
+      noctalia_msg:wifi-disable) path=noctalia_msg_wifi_disable; depth=$((i + 1)) ;;
+      noctalia_msg:wifi-enable) path=noctalia_msg_wifi_enable; depth=$((i + 1)) ;;
+      noctalia_msg:wifi-status) path=noctalia_msg_wifi_status; depth=$((i + 1)) ;;
+      noctalia_msg:wifi-toggle) path=noctalia_msg_wifi_toggle; depth=$((i + 1)) ;;
+      noctalia_msg:window-switcher) path=noctalia_msg_window_switcher; depth=$((i + 1)) ;;
+      noctalia_msg:workspace-alert-add) path=noctalia_msg_workspace_alert_add; depth=$((i + 1)) ;;
+      noctalia_msg:workspace-alert-add-window) path=noctalia_msg_workspace_alert_add_window; depth=$((i + 1)) ;;
+      noctalia_msg:workspace-alert-clear) path=noctalia_msg_workspace_alert_clear; depth=$((i + 1)) ;;
+      noctalia_msg:workspace-alert-clear-all) path=noctalia_msg_workspace_alert_clear_all; depth=$((i + 1)) ;;
+      noctalia_msg:workspace-alert-status) path=noctalia_msg_workspace_alert_status; depth=$((i + 1)) ;;
+      noctalia_msg:workspace-switch) path=noctalia_msg_workspace_switch; depth=$((i + 1)) ;;
+      noctalia_msg_color_scheme_set:builtin) path=noctalia_msg_color_scheme_set_builtin; depth=$((i + 1)) ;;
+      noctalia_msg_color_scheme_set:wallpaper) path=noctalia_msg_color_scheme_set_wallpaper; depth=$((i + 1)) ;;
+      noctalia_msg_color_scheme_set:community) path=noctalia_msg_color_scheme_set_community; depth=$((i + 1)) ;;
+      noctalia_msg_color_scheme_set:custom) path=noctalia_msg_color_scheme_set_custom; depth=$((i + 1)) ;;
+      noctalia_msg_plugins:list) path=noctalia_msg_plugins_list; depth=$((i + 1)) ;;
+      noctalia_msg_plugins:enable) path=noctalia_msg_plugins_enable; depth=$((i + 1)) ;;
+      noctalia_msg_plugins:disable) path=noctalia_msg_plugins_disable; depth=$((i + 1)) ;;
+      noctalia_msg_plugins:update) path=noctalia_msg_plugins_update; depth=$((i + 1)) ;;
+      noctalia_msg_plugins:source) path=noctalia_msg_plugins_source; depth=$((i + 1)) ;;
+      noctalia_msg_plugins_source:list) path=noctalia_msg_plugins_source_list; depth=$((i + 1)) ;;
+      noctalia_msg_plugins_source:add) path=noctalia_msg_plugins_source_add; depth=$((i + 1)) ;;
+      noctalia_msg_plugins_source:remove) path=noctalia_msg_plugins_source_remove; depth=$((i + 1)) ;;
+      noctalia_plugins:lint) path=noctalia_plugins_lint; depth=$((i + 1)) ;;
+    esac
+  done
+
+  case "$path" in
+    noctalia)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'completions\nconfig\ndmenu\nfirefox-theme\nmsg\nplugins\ntheme\n-v\n--version\n-d\n--daemon\n-h\n--help'
+        return
+      fi
+      _noctalia_complete_words $'completions\nconfig\ndmenu\nfirefox-theme\nmsg\nplugins\ntheme'
+      ;;
+    noctalia_completions)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'bash\nfish\nzsh'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_config)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'export\nreplay-report\nsettings-count\nvalidate\n-h\n--help'
+        return
+      fi
+      _noctalia_complete_words $'export\nreplay-report\nsettings-count\nvalidate'
+      ;;
+    noctalia_config_export)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'merged\nfull'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_config_replay_report)
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --target)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'--target\n--flattened\n--force\n-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        case "$token" in
+          --target) skip_next=1; continue ;;
+        esac
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_config_settings_count)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_config_validate)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_dmenu)
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        -p|--prompt)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-p\n--prompt\n-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        case "$token" in
+          -p|--prompt) skip_next=1; continue ;;
+        esac
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_firefox_theme)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'install\nuninstall\nupdate\ndark\nlight\nauto\nhost\nstart\nhelp'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'annotate\nbar-auto-hide-set\nbar-hide\nbar-layer-set\nbar-reserve-toggle\nbar-show\nbar-toggle\nbluetooth-disable\nbluetooth-enable\nbluetooth-status\nbluetooth-toggle\nbrightness-down\nbrightness-list-backlight-devices\nbrightness-osd\nbrightness-set\nbrightness-up\ncaffeine-disable\ncaffeine-enable\ncaffeine-toggle\nclipboard-clear\nclipboard-copy\nclipboard-text\ncolor-scheme-get\ncolor-scheme-set\nconfig-get\nconfig-set\nconfig-reload\ndesktop-widgets-edit\ndesktop-widgets-exit\ndesktop-widgets-hide\ndesktop-widgets-show\ndesktop-widgets-toggle\ndesktop-widgets-toggle-edit\ndock-hide\ndock-reload\ndock-show\ndock-toggle\ndpms-off\ndpms-on\neffects-profile-set\ngreeter-sync\nkeyboard-backlight-down\nkeyboard-backlight-osd\nkeyboard-backlight-set\nkeyboard-backlight-toggle\nkeyboard-backlight-up\nkeyboard-layout-cycle\nlockscreen-widgets-edit\nlockscreen-widgets-exit\nlockscreen-widgets-toggle-edit\nlog-level-set\nlog-level-status\nmedia\nmic-mute\nmic-volume-down\nmic-volume-osd\nmic-volume-set\nmic-volume-up\nnetwork-toggle\nnightlight-disable\nnightlight-enable\nnightlight-force-toggle\nnightlight-toggle\nnotification-clear-active\nnotification-clear-history\nnotification-dnd-set\nnotification-dnd-status\nnotification-dnd-toggle\nnotification-invoke-latest\nnotification-show\nosd-disable\nosd-enable\nosd-show\nosd-toggle\npanel-close\npanel-open\npanel-toggle\nplugin\nplugins\npower-cycle\npower-set\nscreenshot-annotate\nscreenshot-fullscreen\nscreenshot-region\nscreenshot-window\nsession\nsettings-close\nsettings-open\nsettings-open-plugin\nsettings-open-widget\nsettings-toggle\nstatus\ntaskbar-cycle\ntemplates-apply\ntheme-mode-get\ntheme-mode-set\ntheme-mode-toggle\nvolume-down\nvolume-mute\nvolume-osd\nvolume-set\nvolume-up\nwallpaper-get\nwallpaper-next\nwallpaper-previous\nwallpaper-random\nwallpaper-set\nwifi-disable\nwifi-enable\nwifi-status\nwifi-toggle\nwindow-switcher\nworkspace-alert-add\nworkspace-alert-add-window\nworkspace-alert-clear\nworkspace-alert-clear-all\nworkspace-alert-status\nworkspace-switch\n-h\n--help'
+        return
+      fi
+      _noctalia_complete_words $'annotate\nbar-auto-hide-set\nbar-hide\nbar-layer-set\nbar-reserve-toggle\nbar-show\nbar-toggle\nbluetooth-disable\nbluetooth-enable\nbluetooth-status\nbluetooth-toggle\nbrightness-down\nbrightness-list-backlight-devices\nbrightness-osd\nbrightness-set\nbrightness-up\ncaffeine-disable\ncaffeine-enable\ncaffeine-toggle\nclipboard-clear\nclipboard-copy\nclipboard-text\ncolor-scheme-get\ncolor-scheme-set\nconfig-get\nconfig-set\nconfig-reload\ndesktop-widgets-edit\ndesktop-widgets-exit\ndesktop-widgets-hide\ndesktop-widgets-show\ndesktop-widgets-toggle\ndesktop-widgets-toggle-edit\ndock-hide\ndock-reload\ndock-show\ndock-toggle\ndpms-off\ndpms-on\neffects-profile-set\ngreeter-sync\nkeyboard-backlight-down\nkeyboard-backlight-osd\nkeyboard-backlight-set\nkeyboard-backlight-toggle\nkeyboard-backlight-up\nkeyboard-layout-cycle\nlockscreen-widgets-edit\nlockscreen-widgets-exit\nlockscreen-widgets-toggle-edit\nlog-level-set\nlog-level-status\nmedia\nmic-mute\nmic-volume-down\nmic-volume-osd\nmic-volume-set\nmic-volume-up\nnetwork-toggle\nnightlight-disable\nnightlight-enable\nnightlight-force-toggle\nnightlight-toggle\nnotification-clear-active\nnotification-clear-history\nnotification-dnd-set\nnotification-dnd-status\nnotification-dnd-toggle\nnotification-invoke-latest\nnotification-show\nosd-disable\nosd-enable\nosd-show\nosd-toggle\npanel-close\npanel-open\npanel-toggle\nplugin\nplugins\npower-cycle\npower-set\nscreenshot-annotate\nscreenshot-fullscreen\nscreenshot-region\nscreenshot-window\nsession\nsettings-close\nsettings-open\nsettings-open-plugin\nsettings-open-widget\nsettings-toggle\nstatus\ntaskbar-cycle\ntemplates-apply\ntheme-mode-get\ntheme-mode-set\ntheme-mode-toggle\nvolume-down\nvolume-mute\nvolume-osd\nvolume-set\nvolume-up\nwallpaper-get\nwallpaper-next\nwallpaper-previous\nwallpaper-random\nwallpaper-set\nwifi-disable\nwifi-enable\nwifi-status\nwifi-toggle\nwindow-switcher\nworkspace-alert-add\nworkspace-alert-add-window\nworkspace-alert-clear\nworkspace-alert-clear-all\nworkspace-alert-status\nworkspace-switch'
+      ;;
+    noctalia_msg_annotate)
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --pipe-command)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --directory)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --filename-pattern)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --format)
+          _noctalia_complete_words $'png\njpeg\nwebp\njxl'
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --quality)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'--save-to-file\n--no-save-to-file\n--copy-to-clipboard\n--no-copy-to-clipboard\n--pipe-to-command\n--no-pipe-to-command\n--freeze-screen\n--no-freeze-screen\n--confirm-region\n--no-confirm-region\n--remember-last-region\n--no-remember-last-region\n--show-cursor\n--no-show-cursor\n--annotate\n--no-annotate\n--skip-annotate-on-copy-save\n--no-skip-annotate-on-copy-save\n--close-on-copy\n--no-close-on-copy\n--close-on-save\n--no-close-on-save\n--copy-on-close\n--no-copy-on-close\n--pipe-command\n--directory\n--filename-pattern\n--format\n--quality\n-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        case "$token" in
+          --pipe-command|--directory|--filename-pattern|--format|--quality) skip_next=1; continue ;;
+        esac
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bar_auto_hide_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'on\noff\nsmart\ntrue\nfalse\n1\n0'
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        2)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bar_hide)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bar_layer_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'top\noverlay'
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        2)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bar_reserve_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bar_show)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bar_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bluetooth_disable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bluetooth_enable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bluetooth_status)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_bluetooth_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_brightness_down)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_brightness_list_backlight_devices)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_brightness_osd)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_brightness_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_brightness_up)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_caffeine_disable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_caffeine_enable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_caffeine_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_clipboard_clear)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_clipboard_copy)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_clipboard_text)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_color_scheme_get)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_color_scheme_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'builtin\nwallpaper\ncommunity\ncustom\n-h\n--help'
+        return
+      fi
+      _noctalia_complete_words $'builtin\nwallpaper\ncommunity\ncustom'
+      ;;
+    noctalia_msg_color_scheme_set_builtin)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'Ayu\nCatppuccin\nDracula\nEldritch\nGruvbox\nKanagawa\nNoctalia\nNord\nRosé Pine\nTokyo-Night'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_color_scheme_set_wallpaper)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'m3-tonal-spot\nm3-content\nm3-fruit-salad\nm3-rainbow\nm3-monochrome\nvibrant\nfaithful\nsoft\ndysfunctional\nmuted'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_color_scheme_set_community)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_color_scheme_set_custom)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_config_get)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_config_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_config_reload)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_desktop_widgets_edit)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_desktop_widgets_exit)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_desktop_widgets_hide)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_desktop_widgets_show)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_desktop_widgets_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_desktop_widgets_toggle_edit)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_dock_hide)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_dock_reload)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_dock_show)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_dock_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_dpms_off)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_dpms_on)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_effects_profile_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'output\ninput'
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_greeter_sync)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_keyboard_backlight_down)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_keyboard_backlight_osd)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_keyboard_backlight_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_keyboard_backlight_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_keyboard_backlight_up)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_keyboard_layout_cycle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_lockscreen_widgets_edit)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_lockscreen_widgets_exit)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_lockscreen_widgets_toggle_edit)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_log_level_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'debug\ninfo\nwarn\nerror'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_log_level_status)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_media)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'next\nprevious\ntoggle\nplay\npause\nstop\nnext-player\nprevious-player\nvolume-up\nvolume-down\nvolume-set'
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_mic_mute)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_mic_volume_down)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_mic_volume_osd)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_mic_volume_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_mic_volume_up)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_network_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_nightlight_disable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_nightlight_enable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_nightlight_force_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_nightlight_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_notification_clear_active)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_notification_clear_history)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_notification_dnd_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'on\noff\ntrue\nfalse\n1\n0'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_notification_dnd_status)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_notification_dnd_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_notification_invoke_latest)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_notification_show)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_osd_disable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_osd_enable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_osd_show)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_osd_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_panel_close)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_panel_open)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_panel_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_plugin)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_plugin_prefix
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        2)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        3)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_plugins)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'list\nenable\ndisable\nupdate\nsource\n-h\n--help'
+        return
+      fi
+      _noctalia_complete_words $'list\nenable\ndisable\nupdate\nsource'
+      ;;
+    noctalia_msg_plugins_list)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_plugins_enable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_plugins_disabled
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_plugins_disable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_plugins_enabled
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_plugins_update)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_plugins_source)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'list\nadd\nremove\n-h\n--help'
+        return
+      fi
+      _noctalia_complete_words $'list\nadd\nremove'
+      ;;
+    noctalia_msg_plugins_source_list)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_plugins_source_add)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          _noctalia_complete_words $'git\npath'
+          ;;
+        2)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_plugins_source_remove)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_power_cycle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'next\nprev'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_power_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_screenshot_annotate)
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --pipe-command)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --directory)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --filename-pattern)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --format)
+          _noctalia_complete_words $'png\njpeg\nwebp\njxl'
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --quality)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'--save-to-file\n--no-save-to-file\n--copy-to-clipboard\n--no-copy-to-clipboard\n--pipe-to-command\n--no-pipe-to-command\n--freeze-screen\n--no-freeze-screen\n--confirm-region\n--no-confirm-region\n--remember-last-region\n--no-remember-last-region\n--show-cursor\n--no-show-cursor\n--annotate\n--no-annotate\n--skip-annotate-on-copy-save\n--no-skip-annotate-on-copy-save\n--close-on-copy\n--no-close-on-copy\n--close-on-save\n--no-close-on-save\n--copy-on-close\n--no-copy-on-close\n--pipe-command\n--directory\n--filename-pattern\n--format\n--quality\n-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        case "$token" in
+          --pipe-command|--directory|--filename-pattern|--format|--quality) skip_next=1; continue ;;
+        esac
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_screenshot_fullscreen)
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --pipe-command)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --directory)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --filename-pattern)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --format)
+          _noctalia_complete_words $'png\njpeg\nwebp\njxl'
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --quality)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'--save-to-file\n--no-save-to-file\n--copy-to-clipboard\n--no-copy-to-clipboard\n--pipe-to-command\n--no-pipe-to-command\n--freeze-screen\n--no-freeze-screen\n--confirm-region\n--no-confirm-region\n--remember-last-region\n--no-remember-last-region\n--show-cursor\n--no-show-cursor\n--annotate\n--no-annotate\n--skip-annotate-on-copy-save\n--no-skip-annotate-on-copy-save\n--close-on-copy\n--no-close-on-copy\n--close-on-save\n--no-close-on-save\n--copy-on-close\n--no-copy-on-close\n--pipe-command\n--directory\n--filename-pattern\n--format\n--quality\n-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        case "$token" in
+          --pipe-command|--directory|--filename-pattern|--format|--quality) skip_next=1; continue ;;
+        esac
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_screenshot_region)
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --pipe-command)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --directory)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --filename-pattern)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --format)
+          _noctalia_complete_words $'png\njpeg\nwebp\njxl'
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --quality)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'--save-to-file\n--no-save-to-file\n--copy-to-clipboard\n--no-copy-to-clipboard\n--pipe-to-command\n--no-pipe-to-command\n--freeze-screen\n--no-freeze-screen\n--confirm-region\n--no-confirm-region\n--remember-last-region\n--no-remember-last-region\n--show-cursor\n--no-show-cursor\n--annotate\n--no-annotate\n--skip-annotate-on-copy-save\n--no-skip-annotate-on-copy-save\n--close-on-copy\n--no-close-on-copy\n--close-on-save\n--no-close-on-save\n--copy-on-close\n--no-copy-on-close\n--pipe-command\n--directory\n--filename-pattern\n--format\n--quality\n-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        case "$token" in
+          --pipe-command|--directory|--filename-pattern|--format|--quality) skip_next=1; continue ;;
+        esac
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_screenshot_window)
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --pipe-command)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --directory)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --filename-pattern)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --format)
+          _noctalia_complete_words $'png\njpeg\nwebp\njxl'
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --quality)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'--save-to-file\n--no-save-to-file\n--copy-to-clipboard\n--no-copy-to-clipboard\n--pipe-to-command\n--no-pipe-to-command\n--freeze-screen\n--no-freeze-screen\n--confirm-region\n--no-confirm-region\n--remember-last-region\n--no-remember-last-region\n--show-cursor\n--no-show-cursor\n--annotate\n--no-annotate\n--skip-annotate-on-copy-save\n--no-skip-annotate-on-copy-save\n--close-on-copy\n--no-close-on-copy\n--close-on-save\n--no-close-on-save\n--copy-on-close\n--no-copy-on-close\n--pipe-command\n--directory\n--filename-pattern\n--format\n--quality\n-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        case "$token" in
+          --pipe-command|--directory|--filename-pattern|--format|--quality) skip_next=1; continue ;;
+        esac
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_session)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'lock\nsuspend\nlock-and-suspend\nlogout\nreboot\nreboot-uefi\nshutdown'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_settings_close)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_settings_open)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_settings_open_plugin)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_settings_open_widget)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_settings_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_status)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_taskbar_cycle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'next\nprev'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_templates_apply)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_theme_mode_get)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_theme_mode_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'dark\nlight\nauto'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_theme_mode_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_volume_down)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_volume_mute)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_volume_osd)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_volume_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_volume_up)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wallpaper_get)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wallpaper_next)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wallpaper_previous)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wallpaper_random)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wallpaper_set)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        1)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wifi_disable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wifi_enable)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wifi_status)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_wifi_toggle)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_window_switcher)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'close\nhide\nhold'
+          ;;
+        1)
+          _noctalia_complete_words $'all\noutput\nworkspace\ncurrent'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_workspace_alert_add)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_workspace_alert_add_window)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_workspace_alert_clear)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_workspace_alert_clear_all)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_workspace_alert_status)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_msg_workspace_switch)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          _noctalia_complete_words $'next\nprev'
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+    noctalia_plugins)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'lint\n-h\n--help'
+        return
+      fi
+      _noctalia_complete_words $'lint'
+      ;;
+    noctalia_plugins_lint)
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+      esac
+      ;;
+    noctalia_theme)
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --scheme)
+          _noctalia_complete_words $'m3-tonal-spot\nm3-content\nm3-fruit-salad\nm3-rainbow\nm3-monochrome\nvibrant\nfaithful\nsoft\ndysfunctional\nmuted'
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --theme-json)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        -o)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        -r|--render)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        -c|--config)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          return ;;
+      esac
+      case "${COMP_WORDS[COMP_CWORD-1]}" in
+        --default-mode)
+          _noctalia_complete_words $'dark\nlight'
+          return ;;
+      esac
+      if [[ "$cur" == -* ]]; then
+        _noctalia_complete_words $'--scheme\n--dark\n--light\n--both\n--pure-black\n--theme-json\n-o\n-r\n--render\n-c\n--config\n--builtin-config\n--list-templates\n--default-mode\n-h\n--help'
+        return
+      fi
+      local positional=0 skip_next=0
+      for ((i=depth; i<COMP_CWORD; ++i)); do
+        token="${COMP_WORDS[i]}"
+        if ((skip_next)); then skip_next=0; continue; fi
+        case "$token" in
+          --scheme|--theme-json|-o|-r|--render|-c|--config|--default-mode) skip_next=1; continue ;;
+        esac
+        [[ "$token" == --*=* || "$token" == -* ]] && continue
+        ((positional++))
+      done
+      case $positional in
+        0)
+          compopt -o filenames
+          COMPREPLY=( $(compgen -f -- "$cur") )
+          ;;
+        *)
+          ;;
+      esac
+      ;;
+  esac
+}
+
+complete -F _noctalia_completions noctalia

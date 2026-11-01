@@ -38,7 +38,6 @@ stages:
         fish wl-clipboard emacs-pgtk alacritty udiskie fuzzel
         brightnessctl playerctl libvterm0 libvterm-dev
         build-essential procps curl file git
-        umbriel xdg-desktop-portal-umbriel
         libxcb-cursor0 libxcb-image0 libxcb-render-util0 libxcb-util1
         libsdbus-c++2 libgles2 libsecret-1-0 libsodium26
         libpipewire-0.3-0t64 libwireplumber-0.5-0 libqalculate23

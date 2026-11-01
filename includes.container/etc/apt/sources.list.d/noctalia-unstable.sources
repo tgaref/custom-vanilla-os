@@ -1,6 +1,0 @@
-Enabled: True
-Types: deb deb-src
-URIs: https://pkg.noctalia.dev/deb/
-Signed-By: /usr/share/keyrings/nickh-archive-keyring.gpg
-Suites: unstable/
-Architectures: amd64

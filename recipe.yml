@@ -29,21 +29,25 @@ stages:
 
   # Put your custom actions below this comment
 
+  - name: add-noctalia-repo
+    type: shell
+    commands:
+      - curl -fsSL https://pkg.noctalia.dev/deb/nickh-archive-keyring.gpg -o /usr/share/keyrings/nickh-archive-keyring.gpg
+      - >-
+        printf "Enabled: True\nTypes: deb\nURIs: https://pkg.noctalia.dev/deb/\nSigned-By: /usr/share/keyrings/nickh-archive-keyring.gpg\nSuites: trixie/ trixie-backports/\nArchitectures: amd64\n" > /etc/apt/sources.list.d/noctalia-trixie.sources
+      - apt-get update
+
   - name: install-all-packages
     type: shell
     commands:
-      - apt-get update
       - >-
         apt-get install -y --no-install-recommends
         fish wl-clipboard emacs-pgtk alacritty udiskie fuzzel
         brightnessctl playerctl libvterm0 libvterm-dev
         build-essential procps curl file git
         libxcb-cursor0 libxcb-image0 libxcb-render-util0 libxcb-util1
-        libsdbus-c++2 libgles2 libsecret-1-0 libsodium26
-        libpipewire-0.3-0t64 libwireplumber-0.5-0 libqalculate23
-        libical3t64 libtomlplusplus3t64 libmd4c0 libwebp7
-        libwebpdemux2 libsndfile1 libjemalloc2 libinput10
-        libseat1 libxml2-16
+        libinput10 libseat1
+        noctalia
       - ldconfig
 
   # Put your custom actions above this comment

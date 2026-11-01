@@ -32,11 +32,7 @@ stages:
   - name: install-all-packages
     type: shell
     commands:
-      # Add Dank Linux repository for Niri and Xwayland-satellite
-      - curl -fsSL https://download.opensuse.org/repositories/home:/AvengeMedia:/danklinux/Debian_Testing/Release.key | gpg --dearmor -o /etc/apt/trusted.gpg.d/home_AvengeMedia_danklinux.gpg
-      - echo 'deb http://download.opensuse.org/repositories/home:/AvengeMedia:/danklinux/Debian_Testing/ /' > /etc/apt/sources.list.d/home:AvengeMedia:danklinux.list
       - apt-get update
-      # Install all required packages in the same refreshed context
       - >-
         apt-get install -y --no-install-recommends
         fish wl-clipboard emacs-pgtk alacritty udiskie fuzzel

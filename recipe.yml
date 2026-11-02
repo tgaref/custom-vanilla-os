@@ -48,6 +48,7 @@ stages:
         libxcb-cursor0 libxcb-image0 libxcb-render-util0 libxcb-util1
         libinput10 libseat1
         noctalia
+        hplip printer-driver-foo2zjs
       - ldconfig
 
   # Put your custom actions above this comment

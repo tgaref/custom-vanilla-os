@@ -33,7 +33,9 @@ stages:
     type: shell
     commands:
       - curl -fsSL https://pkg.noctalia.dev/deb/nickh-archive-keyring.gpg -o /usr/share/keyrings/nickh-archive-keyring.gpg
-      - curl -fsSL https://pkg.noctalia.dev/deb/noctalia-unstable.sources -o /etc/apt/sources.list.d/noctalia-unstable.sources
+      - curl -fsSL https://pkg.noctalia.dev/deb/noctalia-trixie.sources -o /etc/apt/sources.list.d/noctalia-trixie.sources
+      - >-
+        printf "Package: *\nPin: release o=Noctalia, a=trixie-backports\nPin-Priority: 500\n" > /etc/apt/preferences.d/noctalia-backports
       - apt-get update
 
   - name: install-all-packages

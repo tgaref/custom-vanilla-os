@@ -33,8 +33,7 @@ stages:
     type: shell
     commands:
       - curl -fsSL https://pkg.noctalia.dev/deb/nickh-archive-keyring.gpg -o /usr/share/keyrings/nickh-archive-keyring.gpg
-      - >-
-        printf "Enabled: True\nTypes: deb\nURIs: https://pkg.noctalia.dev/deb/\nSigned-By: /usr/share/keyrings/nickh-archive-keyring.gpg\nSuites: trixie/ trixie-backports/\nArchitectures: amd64\n" > /etc/apt/sources.list.d/noctalia-trixie.sources
+      - curl -fsSL https://pkg.noctalia.dev/deb/noctalia-unstable.sources -o /etc/apt/sources.list.d/noctalia-unstable.sources
       - apt-get update
 
   - name: install-all-packages
@@ -47,7 +46,7 @@ stages:
         build-essential procps curl file git
         libxcb-cursor0 libxcb-image0 libxcb-render-util0 libxcb-util1
         libinput10 libseat1
-        noctalia
+        noctalia umbriel
         hplip printer-driver-foo2zjs
       - ldconfig
 
